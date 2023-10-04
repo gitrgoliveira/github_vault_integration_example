@@ -1,0 +1,1 @@
+# github_vault_integration_example
