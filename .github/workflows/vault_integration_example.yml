@@ -25,9 +25,7 @@ jobs:
         exportEnv: true # optional, default is true
         # A semicolon-separated list of secrets to retrieve. These will automatically be converted to environmental variable keys. See README for more details
         secrets: |
-          secret/data/ci/aws accessKey | AWS_ACCESS_KEY_ID ;
-          secret/data/ci/aws secretKey | AWS_SECRET_ACCESS_KEY ;
-          secret/data/ci npm_token
+          secret/data/sample-secret first-secret | FIRST_SECRET ;
         
         # Time in seconds, after which token expires
         #jwtTtl: # optional, default is 3600
@@ -53,12 +51,9 @@ jobs:
         role: github_jwt
         # path: # optional
         jwtGithubAudience: sigstore # set the GitHub token's aud claim
-
         
         # Whether or not export secrets as environment variables.
         exportEnv: true # optional, default is true
         # A semicolon-separated list of secrets to retrieve. These will automatically be converted to environmental variable keys. See README for more details
         secrets: |
-          secret/data/ci/aws accessKey | AWS_ACCESS_KEY_ID ;
-          secret/data/ci/aws secretKey | AWS_SECRET_ACCESS_KEY ;
-          secret/data/ci npm_token
+          secret/data/sample-secret first-secret | FIRST_SECRET ;
