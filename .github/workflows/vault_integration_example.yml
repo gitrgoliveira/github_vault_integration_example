@@ -32,7 +32,7 @@ jobs:
         #jwtTtl: # optional, default is 3600
         # The encoding type of the secret to decode. If not specified, the secret will not be decoded. Supported values: base64, hex, utf8
         #secretEncodingType: # optional
-    - name: Create annotation for build error
+    - name: output of reading a static secret
       run: |
         echo "static secret: ${{ steps.secrets.outputs.first-secret }}"
 
@@ -63,6 +63,6 @@ jobs:
         secrets: |
           secret/data/sample-secret first-secret | FIRST_SECRET ;
     
-    - name: output of read dynamic secret
+    - name: output of reading a dynamic secret
       run: |
         echo "dynamic secret: ${{ steps.secrets.outputs.first-secret }}"
