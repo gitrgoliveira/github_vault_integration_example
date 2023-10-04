@@ -10,6 +10,7 @@ jobs:
 
     steps:
     - name: Read Secrets
+      id: secrets
       uses: hashicorp/vault-action@v2
       with:
         # The URL for the vault endpoint
@@ -31,6 +32,8 @@ jobs:
         #jwtTtl: # optional, default is 3600
         # The encoding type of the secret to decode. If not specified, the secret will not be decoded. Supported values: base64, hex, utf8
         #secretEncodingType: # optional
+    - name: Create annotation for build error
+      run: echo "static secret: ${{ steps.secrets.outputs.first-secret }}"
 
   read_dynamic_secret:
     name: Example of reading a dynamic secret
@@ -42,6 +45,7 @@ jobs:
 
     steps:
     - name: Read Secrets
+      id: secrets
       uses: hashicorp/vault-action@v2
       with:
         # The URL for the vault endpoint
@@ -57,3 +61,6 @@ jobs:
         # A semicolon-separated list of secrets to retrieve. These will automatically be converted to environmental variable keys. See README for more details
         secrets: |
           secret/data/sample-secret first-secret | FIRST_SECRET ;
+    
+    - name: output of read dynamic secret
+      run: echo "dynamic secret: ${{ steps.secrets.outputs.first-secret }}"
