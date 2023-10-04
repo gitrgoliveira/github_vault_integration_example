@@ -33,7 +33,8 @@ jobs:
         # The encoding type of the secret to decode. If not specified, the secret will not be decoded. Supported values: base64, hex, utf8
         #secretEncodingType: # optional
     - name: Create annotation for build error
-      run: echo "static secret: ${{ steps.secrets.outputs.first-secret }}"
+      run: |
+        echo "static secret: ${{ steps.secrets.outputs.first-secret }}"
 
   read_dynamic_secret:
     name: Example of reading a dynamic secret
@@ -63,4 +64,5 @@ jobs:
           secret/data/sample-secret first-secret | FIRST_SECRET ;
     
     - name: output of read dynamic secret
-      run: echo "dynamic secret: ${{ steps.secrets.outputs.first-secret }}"
+      run: |
+        echo "dynamic secret: ${{ steps.secrets.outputs.first-secret }}"
