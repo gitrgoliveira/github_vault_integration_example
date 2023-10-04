@@ -2,6 +2,7 @@
 
 # GITHUB_TOKEN
 provider "github" {
+    owner = var.github_org
 }
 
 # configure the GitHub repo with the vault address
@@ -27,13 +28,14 @@ resource "vault_jwt_auth_backend_role" "github" {
     backend = vault_jwt_auth_backend.github.path
     role_type = "jwt"
     role_name = "example_role"
-    bound_audiences = [ "https://github.com/${var.github_org}" ]
+    
+    # bound_audiences = [ "https://github.com/${var.github_org}" ]
+    bound_audiences = [ "example_audience" ]
     user_claim = "sub"
     bound_claims_type = "glob"
 
     bound_claims = {
-      "sub" = "repo:${var.github_repo}/*",
-      "environment" = "*",
+      "sub" = "repo:${var.github_org}/${var.github_repo}:*",
       "repository" = "*",
     }
     token_policies = [ vault_policy.github_repo_access.name ]

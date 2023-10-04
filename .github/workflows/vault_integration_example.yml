@@ -18,7 +18,7 @@ jobs:
         method: jwt
         role: example_role
         path: github_jwt # optional
-        jwtGithubAudience: sigstore # set the GitHub token's aud claim
+        jwtGithubAudience: example_audience # set the GitHub token's aud claim
 
         
         # Whether or not export secrets as environment variables.
@@ -48,9 +48,9 @@ jobs:
         url: ${{ secrets.VAULT_ADDR }}
         namespace: admin  
         method: jwt
-        role: github_jwt
-        # path: # optional
-        jwtGithubAudience: sigstore # set the GitHub token's aud claim
+        role: example_role
+        path: github_jwt # optional
+        jwtGithubAudience: example_audience # set the GitHub token's aud claim
         
         # Whether or not export secrets as environment variables.
         exportEnv: true # optional, default is true
