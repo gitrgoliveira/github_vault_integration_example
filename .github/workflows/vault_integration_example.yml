@@ -34,7 +34,7 @@ jobs:
         #secretEncodingType: # optional
     - name: output of reading a static secret
       run: |
-        echo "static secret: ${{ steps.secrets.outputs.first-secret }}"
+        echo "static secret: $(echo ${FIRST_SECRET} | base64)"
 
   read_dynamic_secret:
     name: Example of reading a dynamic secret
@@ -65,4 +65,4 @@ jobs:
     
     - name: output of reading a dynamic secret
       run: |
-        echo "dynamic secret: ${{ steps.secrets.outputs.first-secret }}"
+        echo "dynamic secret: $(echo ${FIRST_SECRET} | base64)"
