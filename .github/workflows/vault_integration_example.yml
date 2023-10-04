@@ -16,8 +16,8 @@ jobs:
         url: ${{ secrets.VAULT_ADDR }}
         namespace: admin  
         method: jwt
-        role: github_jwt
-        # path: # optional
+        role: example_role
+        path: github_jwt # optional
         jwtGithubAudience: sigstore # set the GitHub token's aud claim
 
         

@@ -18,6 +18,7 @@ provider "vault" {
 
 # configure the Vault provider from terraform variables
 resource "vault_jwt_auth_backend" "github" {
+    path = "github_jwt"
     oidc_discovery_url = "https://token.actions.githubusercontent.com"
     bound_issuer = "https://token.actions.githubusercontent.com"
 }
@@ -25,7 +26,7 @@ resource "vault_jwt_auth_backend" "github" {
 resource "vault_jwt_auth_backend_role" "github" {
     backend = vault_jwt_auth_backend.github.path
     role_type = "jwt"
-    role_name = "github_jwt"
+    role_name = "example_role"
     bound_audiences = [ "https://github.com/${var.github_org}" ]
     user_claim = "sub"
     bound_claims_type = "glob"
@@ -35,5 +36,16 @@ resource "vault_jwt_auth_backend_role" "github" {
       "environment" = "*",
       "repository" = "*",
     }
+    token_policies = [ vault_policy.github_repo_access.name ]
+    
+}
+
+resource "vault_policy" "github_repo_access" {
+    name = "github_repo_access"
+    policy = <<EOT
+path "secret/data/*" {
+  capabilities = ["read"]
+}
+EOT
     
 }
