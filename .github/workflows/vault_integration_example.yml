@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Read Secrets
+    - name: Read Static Secrets
       id: secrets
       uses: hashicorp/vault-action@v2
       with:
@@ -24,6 +24,10 @@ jobs:
         
         # Whether or not export secrets as environment variables.
         exportEnv: true # optional, default is true
+
+        # Whether or not export Vault token as environment variables (i.e VAULT_TOKEN).
+        exportToken: true # optional, default is true
+
         # A semicolon-separated list of secrets to retrieve. These will automatically be converted to environmental variable keys. See README for more details
         secrets: |
           secret/data/sample-secret first-secret | FIRST_SECRET ;
@@ -36,6 +40,11 @@ jobs:
       run: |
         echo "static secret: $(echo ${FIRST_SECRET} | base64)"
 
+    - name: Revoke token
+      if: always()
+      run: |
+        curl -X POST -sv -H "X-Vault-Token: ${VAULT_TOKEN}" ${{ secrets.VAULT_ADDR }}/v1/auth/token/revoke-self 
+
   read_dynamic_secret:
     name: Example of reading a dynamic secret
     runs-on: ubuntu-latest
@@ -45,7 +54,7 @@ jobs:
       id-token: write
 
     steps:
-    - name: Read Secrets
+    - name: Read Dynamic Secrets
       id: secrets
       uses: hashicorp/vault-action@v2
       with:
@@ -59,6 +68,10 @@ jobs:
         
         # Whether or not export secrets as environment variables.
         exportEnv: true # optional, default is true
+
+        # Whether or not export Vault token as environment variables (i.e VAULT_TOKEN).
+        exportToken: true # optional, default is true
+
         # A semicolon-separated list of secrets to retrieve. These will automatically be converted to environmental variable keys. See README for more details
         secrets: |
           secret/data/sample-secret first-secret | FIRST_SECRET ;
@@ -66,3 +79,8 @@ jobs:
     - name: output of reading a dynamic secret
       run: |
         echo "dynamic secret: $(echo ${FIRST_SECRET} | base64)"
+
+    - name: Revoke token
+      if: always()
+      run: |
+        curl -X POST -sv -H "X-Vault-Token: ${VAULT_TOKEN}" ${{ secrets.VAULT_ADDR }}/v1/auth/token/revoke-self 
