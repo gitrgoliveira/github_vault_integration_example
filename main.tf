@@ -1,6 +1,3 @@
-
-
-# GITHUB_TOKEN
 provider "github" {
     owner = var.github_org
 }
