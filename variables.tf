@@ -8,5 +8,5 @@ variable "github_org" {
 }
 variable "github_repo" {
     default = "github_vault_integration_example"
-    description = "https address for vault"
+    description = "GitHub repo to trust"
 }
