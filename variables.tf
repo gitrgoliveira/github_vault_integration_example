@@ -1,12 +1,12 @@
 variable "vault_address" {
-    default = "https://vault.example.com"
-    description = "https address for vault"
+  default     = "https://vault.example.com"
+  description = "https address for vault"
 }
 
 variable "github_org" {
-    default = "gitrgoliveira"
+  default = "gitrgoliveira"
 }
 variable "github_repo" {
-    default = "github_vault_integration_example"
-    description = "GitHub repo to trust"
+  default     = "github_vault_integration_example"
+  description = "GitHub repo to trust"
 }
