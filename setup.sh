@@ -7,13 +7,13 @@ echo
 echo "Please enter your GitHub user ID."
 read GITHUB_OWNER
 echo
-echo "Please enter your GitHub personal access token."
+echo "Please enter your GitHub personal access token (no output)."
 read -s GITHUB_TOKEN
 echo
 echo "Please enter your HCP Vault address."
 read VAULT_ADDR
 echo
-echo "Please enter your HCP Vault admin token."
+echo "Please enter your HCP Vault admin token (no output)."
 read -s VAULT_TOKEN
 echo
 echo "GitHub User ID : $GITHUB_OWNER"
@@ -30,10 +30,12 @@ then
 fi
 echo
 
+cat >> credentials.env <<EOM
 export GITHUB_TOKEN=$GITHUB_TOKEN
 export GITHUB_OWNER=$GITHUB_OWNER
 export VAULT_ADDR=$VAULT_ADDR
 export VAULT_TOKEN=$VAULT_TOKEN
+EOM
 
 cat >> terraform.tfvars <<EOM
 github_org="$GITHUB_OWNER"
