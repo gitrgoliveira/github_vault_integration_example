@@ -59,8 +59,8 @@ jobs:
       uses: hashicorp/vault-action@v2
       with:
         # The URL for the vault endpoint
-        url: ${{ secrets.VAULT_ADDR }}
-        namespace: admin
+        url: ${{ vars.VAULT_ADDR }}
+        namespace: ${{ vars.VAULT_NAMESPACE }}
         method: jwt
         role: example_role
         path: github_jwt # optional
