@@ -15,7 +15,7 @@ jobs:
       with:
         # The URL for the vault endpoint
         url: ${{ vars.VAULT_ADDR }}
-        namespace: ${{ vars.VAULT_NAMESPACE }}  
+        namespace: ${{ vars.VAULT_NAMESPACE }}
         method: jwt
         role: example_role
         path: github_jwt # optional
@@ -43,44 +43,4 @@ jobs:
     - name: Revoke token
       if: always()
       run: |
-        curl -X POST -sv -H "X-Vault-Token: ${VAULT_TOKEN}" ${{ secrets.VAULT_ADDR }}/v1/auth/token/revoke-self 
-
-  read_dynamic_secret:
-    name: Example of reading a dynamic secret
-    runs-on: ubuntu-latest
-    
-    permissions:
-      contents: read
-      id-token: write
-
-    steps:
-    - name: Read Dynamic Secrets
-      id: secrets
-      uses: hashicorp/vault-action@v2
-      with:
-        # The URL for the vault endpoint
-        url: ${{ vars.VAULT_ADDR }}
-        namespace: ${{ vars.VAULT_NAMESPACE }}
-        method: jwt
-        role: example_role
-        path: github_jwt # optional
-        jwtGithubAudience: example_audience # set the GitHub token's aud claim
-        
-        # Whether or not export secrets as environment variables.
-        exportEnv: true # optional, default is true
-
-        # Whether or not export Vault token as environment variables (i.e VAULT_TOKEN).
-        exportToken: true # optional, default is true
-
-        # A semicolon-separated list of secrets to retrieve. These will automatically be converted to environmental variable keys. See README for more details
-        secrets: |
-          secret/data/sample-secret first-secret | FIRST_SECRET ;
-    
-    - name: output of reading a dynamic secret
-      run: |
-        echo "dynamic secret: $(echo ${FIRST_SECRET} | base64)"
-
-    - name: Revoke token
-      if: always()
-      run: |
-        curl -X POST -sv -H "X-Vault-Token: ${VAULT_TOKEN}" ${{ secrets.VAULT_ADDR }}/v1/auth/token/revoke-self 
+        curl -X POST -sv -H "X-Vault-Namespace: ${{ vars.VAULT_NAMESPACE }}" -H "X-Vault-Token: ${VAULT_TOKEN}" ${{ vars.VAULT_ADDR }}/v1/auth/token/revoke-self 
