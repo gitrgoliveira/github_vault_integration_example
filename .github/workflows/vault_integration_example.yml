@@ -60,7 +60,7 @@ jobs:
       with:
         # The URL for the vault endpoint
         url: ${{ secrets.VAULT_ADDR }}
-        namespace: admin  
+        namespace: admin
         method: jwt
         role: example_role
         path: github_jwt # optional

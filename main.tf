@@ -2,6 +2,14 @@ provider "github" {
   owner = var.github_org
 }
 
+# resource "random_id" "default" {
+#   byte_length = 4
+# }
+
+# resource "vault_namespace" "instruqt" {
+#   path = "demo_${random_id.default.hex}"
+# }
+
 # configure the GitHub repo with the vault address
 resource "github_actions_secret" "VAULT_ADDR" {
   repository      = var.github_repo
@@ -47,4 +55,30 @@ path "secret/data/*" {
 }
 EOT
 
+}
+resource "vault_mount" "kvv2" {
+  path        = "secret"
+  type        = "kv"
+  options     = { version = "2" }
+  description = "KV Version 2 secret engine mount"
+}
+
+resource "vault_kv_secret_v2" "example" {
+  mount               = vault_mount.kvv2.path
+  name                = "sample-secret"
+  cas                 = 1
+  delete_all_versions = true
+  data_json = jsonencode(
+    {
+      first-secret = "Vault is amazing",
+      foo          = "bar"
+    }
+  )
+  custom_metadata {
+    max_versions = 5
+    data = {
+      foo = "vault@example.com",
+      bar = "12345"
+    }
+  }
 }
