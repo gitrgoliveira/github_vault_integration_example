@@ -15,6 +15,7 @@ jobs:
       with:
         # The URL for the vault endpoint
         url: ${{ vars.VAULT_ADDR }}
+        tlsSkipVerify: true
         namespace: ${{ vars.VAULT_NAMESPACE }}
         method: jwt
         role: example_role
