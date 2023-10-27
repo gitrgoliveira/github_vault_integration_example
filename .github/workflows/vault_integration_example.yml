@@ -44,4 +44,4 @@ jobs:
     - name: Revoke token
       if: always()
       run: |
-        curl -X POST -sv -H "X-Vault-Namespace: ${{ vars.VAULT_NAMESPACE }}" -H "X-Vault-Token: ${VAULT_TOKEN}" ${{ vars.VAULT_ADDR }}/v1/auth/token/revoke-self 
+        curl -X POST -k -sv -H "X-Vault-Namespace: ${{ vars.VAULT_NAMESPACE }}" -H "X-Vault-Token: ${VAULT_TOKEN}" ${{ vars.VAULT_ADDR }}/v1/auth/token/revoke-self 
